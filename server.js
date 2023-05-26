@@ -42,7 +42,7 @@ app.get("/metadata", async (req, res) => {
   );
 
   const sortedFileNames = stats
-    .sort((a, b) => b.ctimeMs - a.ctimeMs)
+    .sort((a, b) => a[1].ctimeMs - b[1].ctimeMs)
     .map((e) => e[0]);
 
   res.contentType("application/json");
