@@ -34,8 +34,19 @@ app.get("/client/*", async (req, res) => {
 
 app.get("/metadata", async (req, res) => {
   const data = await fs.readdir(MIDI_DIR);
+  const stats = await Promise.all(
+    data.map(async (filename) => {
+      const filepath = path.join(MIDI_DIR, filename);
+      return [filename, await fs.stat(filepath)];
+    })
+  );
+
+  const sortedFileNames = stats
+    .sort((a, b) => b.ctimeMs - a.ctimeMs)
+    .map((e) => e[0]);
+
   res.contentType("application/json");
-  res.end(JSON.stringify(data));
+  res.end(JSON.stringify(sortedFileNames));
 });
 
 function midiLength(midi) {

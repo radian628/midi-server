@@ -126,7 +126,7 @@ render(() => {
               fileNames().length > loadedCount()
             ) {
               setTimeout(() => {
-                setLoadedCount(loadedCount() + 1);
+                setLoadedCount(loadedCount() + 10);
                 checkBottom();
               }, 0);
             }
